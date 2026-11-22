@@ -1,0 +1,9 @@
+{
+  "name": "Reschero",
+  "short_name": "Reschero",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#F6F3EE",
+  "theme_color": "#2B2F33",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
