@@ -270,6 +270,41 @@ textarea.m-eingabe { min-height: 70px; resize: vertical; }
   .handy-inhalt, .handy-fertig { border-radius: 22px; padding: 12px; min-height: 0; }
 }
 
+
+/* ---------- Rechner nach Gewerk ---------- */
+.schrittleiste { list-style: none; display: flex; gap: 8px; padding: 0; margin: 0 0 8px; flex-wrap: wrap; }
+.schrittleiste li { display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--grau); font-size: .9rem; padding: 6px 14px 6px 6px; border-radius: 999px; background: var(--weiss); border: 2px solid var(--linie); }
+.schrittleiste li span { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--linie); color: var(--anthrazit); }
+.schrittleiste li.aktiv { border-color: var(--orange); color: var(--anthrazit); }
+.schrittleiste li.aktiv span { background: var(--orange); color: var(--weiss); }
+.schrittleiste li.fertig span { background: var(--gruen); color: var(--weiss); }
+button.kachel { font: inherit; text-align: left; cursor: pointer; }
+.gewerke .kachel { min-height: 150px; justify-content: center; }
+.kachel.gewaehlt { border-color: var(--orange); }
+.vorschau .wert { font-size: 2.6rem; }
+.gruen { color: var(--gruen); }
+.ergebnis-kopf { border-left: 8px solid var(--gruen); }
+.prozesse { display: grid; gap: 10px; }
+.prozess { background: var(--weiss); border-radius: 12px; box-shadow: var(--schatten); padding: 0; margin: 0; }
+.prozess summary { display: grid; grid-template-columns: 40px minmax(160px, 1.2fr) 2fr auto; gap: 14px; align-items: center; padding: 12px 16px; min-height: 64px; list-style: none; }
+.prozess summary::-webkit-details-marker { display: none; }
+.p-rang { width: 34px; height: 34px; border-radius: 50%; background: var(--linie); display: grid; place-items: center; font-weight: 800; }
+.prozess.top .p-rang { background: var(--orange); color: var(--weiss); }
+.p-name { font-weight: 700; }
+.p-name em { display: block; font-style: normal; font-size: .75rem; color: var(--orange-dunkel); text-transform: uppercase; letter-spacing: .04em; }
+.p-balken { height: 18px; background: var(--hintergrund); border-radius: 6px; overflow: hidden; }
+.p-balken i { display: block; height: 100%; background: var(--gruen); border-radius: 6px; }
+.p-wert { font-weight: 800; color: var(--gruen); white-space: nowrap; font-variant-numeric: tabular-nums; min-width: 90px; text-align: right; }
+.p-details { padding: 4px 16px 18px 70px; }
+.p-details table { max-width: 420px; margin-bottom: 8px; }
+.prozess[open] summary { border-bottom: 1px solid var(--linie); }
+@media (max-width: 720px) {
+  .prozess summary { grid-template-columns: 34px 1fr auto; gap: 10px; }
+  .p-balken { grid-column: 2 / 4; grid-row: 2; }
+  .p-details { padding: 4px 14px 16px; }
+  .gewerke .kachel { min-height: 120px; }
+}
+
 /* ---------- Tablet ---------- */
 @media (max-width: 1024px) {
   .kacheln { grid-template-columns: repeat(2, 1fr); }

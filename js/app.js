@@ -31,6 +31,14 @@
     anfragen: '<path d="M4 4h16v11H9l-5 4z"/><path d="M8 8.5h8M8 11.5h5"/>',
     kamera: '<path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/>',
     bild: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="9.5" r="1.8"/><path d="m4 18 5-5 4 4 3-3 4 4"/>',
+    fenster: '<rect x="4" y="3" width="16" height="18" rx="1"/><path d="M12 3v18M4 12h16"/>',
+    dach: '<path d="M2 12 12 4l10 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>',
+    schreiner: '<path d="M4 20h16"/><path d="M6 20V9h4v11M14 20v-6h4v6"/><path d="M6 9l2-4 2 4"/>',
+    ofen: '<rect x="5" y="3" width="14" height="18" rx="2"/><rect x="8" y="11" width="8" height="6" rx="1"/><path d="M11 15c0-1.5 2-1.5 1-3"/><path d="M8 7h8"/>',
+    sanierung: '<path d="M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3z"/><path d="m14 20 6-6M17 14h3v3"/>',
+    shk: '<path d="M4 4v6a4 4 0 0 0 4 4h8"/><path d="M16 10v8M13 14h6"/><path d="M12 20c0-1.5 1-2.5 2-3"/>',
+    elektro: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+    garten: '<path d="M12 21v-8"/><path d="M12 13c-5 0-7-4-7-8 4 0 7 2 7 8zM12 13c5 0 7-3 7-7-4 0-7 2-7 7z"/>',
     mail: '<rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m3 6 9 7 9-7"/>'
   };
   function symbol(name) {
@@ -78,7 +86,7 @@
 
     h += '<section class="abschnitt teaser">';
     h += '<a class="karte" href="#/praxis" style="text-decoration:none;color:inherit"><span class="beispiel-marke" style="border-style:solid;color:var(--gruen);border-color:var(--gruen)">Echt im Einsatz</span><h3 style="margin-top:10px">' + esc(I.praxis.ueberschrift) + "</h3><p>" + esc(I.praxis.text) + '</p><span class="pfeil" style="color:var(--orange-dunkel);font-weight:700">Mehr erfahren →</span></a>';
-    h += '<a class="karte" href="#/rechner" style="text-decoration:none;color:inherit"><h3>Ersparnis-Rechner</h3><p>Drei Werte einstellen und sehen, was Automatisierung in Ihrem Betrieb sparen könnte. Mit offenen Annahmen.</p><span style="color:var(--orange-dunkel);font-weight:700">Zum Rechner →</span></a>';
+    h += '<a class="karte" href="#/rechner" style="text-decoration:none;color:inherit"><h3>Ersparnis-Rechner</h3><p>Gewerk wählen, Zahlen anpassen und sehen, welcher Ablauf in Ihrem Betrieb wie viel Zeit spart. Mit offenen Annahmen.</p><span style="color:var(--orange-dunkel);font-weight:700">Zum Rechner →</span></a>';
     h += '<a class="karte" href="#/arbeitsweise" style="text-decoration:none;color:inherit"><h3>So arbeite ich</h3><p>Analyse, Pilot, Umsetzung, Betreuung. Ihre Programme bleiben. Nichts geht ohne Ihre Freigabe raus.</p><span style="color:var(--orange-dunkel);font-weight:700">Ansehen →</span></a>';
     h += "</section>";
     return h;
@@ -164,55 +172,116 @@
     return h;
   }
 
-  function ansichtRechner() {
+  /* ---------- Rechner nach Gewerk (3 Schritte) ---------- */
+  var R = { gewerk: null, werte: null };
+  try { var gespeichert = JSON.parse(speicher("reschero-rechner") || "null"); if (gespeichert) R = gespeichert; } catch (e) {}
+  function rSpeichern() { speicher("reschero-rechner", JSON.stringify(R)); }
+  function gewerkNach(id) { var g = I.rechner.gewerke; for (var i = 0; i < g.length; i++) if (g[i].id === id) return g[i]; return null; }
+
+  function schrittleiste(n) {
+    var t = ["Gewerk", "Ihre Zahlen", "Ergebnis"];
+    return '<ol class="schrittleiste">' + t.map(function (x, i) {
+      return '<li class="' + (i + 1 === n ? "aktiv" : (i + 1 < n ? "fertig" : "")) + '"><span>' + (i + 1) + "</span>" + esc(x) + "</li>";
+    }).join("") + "</ol>";
+  }
+
+  function ansichtRechner(schritt) {
     var r = I.rechner;
+    var g = R.gewerk && gewerkNach(R.gewerk);
+    if ((schritt === "werte" || schritt === "ergebnis") && !g) schritt = "";
     var h = '<section class="abschnitt"><h1>' + esc(r.ueberschrift) + "</h1><p>" + esc(r.einleitung) + "</p></section>";
-    h += '<section class="abschnitt raster-2"><div class="karte">' +
-      regler("mitarbeiter", "Mitarbeiter", 1, 30, 1, 5, "") +
-      regler("rechnungen", "Rechnungen pro Monat", 5, 300, 5, 40, "") +
-      regler("satz", "Stundensatz fürs Büro", 20, 80, 1, 35, " €") +
-      '<p class="hinweis">Stundensatz: Was eine Stunde Bürozeit kostet, inklusive Nebenkosten. Oder was Ihre eigene Stunde wert ist.</p></div>';
-    h += '<div class="karte" aria-live="polite"><h2>Geschätzte Ersparnis</h2><div class="ergebnisse">' +
-      '<div class="ergebnis-titel">Rechenbeispiel</div>' +
-      '<div class="ergebnis haupt"><div class="wert" id="eStd"></div><div class="was">Stunden pro Monat</div></div>' +
-      '<div class="ergebnis haupt"><div class="wert" id="eMon"></div><div class="was">Euro pro Monat</div></div>' +
-      '<div class="ergebnis haupt" style="grid-column:1/-1"><div class="wert" id="eJahr"></div><div class="was">Euro pro Jahr</div></div>' +
-      '<div class="ergebnis-titel">Vorsichtig gerechnet (die Hälfte)</div>' +
-      '<div class="ergebnis"><div class="wert" id="vStd"></div><div class="was">Stunden pro Monat</div></div>' +
-      '<div class="ergebnis"><div class="wert" id="vJahr"></div><div class="was">Euro pro Jahr</div></div>' +
-      '</div><p class="hinweis" style="margin-top:16px">' + esc(r.hinweis) + "</p>" +
-      "<details><summary>So wird gerechnet</summary><ul>" +
-      "<li>Rechnungen: 15 Min. vorher, 3,75 Min. nachher. Gespart: " + zahl(r.minutenProRechnung, 2) + " Min. pro Rechnung.</li>" +
-      "<li>Belege: 1,5 Eingangsbelege pro Rechnung, je 4 Min. gespart. Das sind " + zahl(r.minutenBelegeProRechnung) + " Min. pro Rechnung.</li>" +
-      "<li>Zeiterfassung & Lohn: 84 Min. vorher, 18 Min. nachher. Gespart: " + zahl(r.minutenProMitarbeiter) + " Min. pro Mitarbeiter.</li>" +
-      "<li>Stunden × Stundensatz = Euro pro Monat. Mal 12 = pro Jahr.</li>" +
-      "<li>Die Annahmen stammen aus den Beispielen der einzelnen Bereiche. Es sind Schätzungen, keine Messungen.</li>" +
-      "</ul></details></div></section>";
+
+    if (!schritt) {
+      h += schrittleiste(1) + '<section class="abschnitt"><h2>In welchem Gewerk arbeiten Sie?</h2><div class="kacheln gewerke">';
+      r.gewerke.forEach(function (x) {
+        h += '<button type="button" class="kachel gewerk' + (R.gewerk === x.id ? " gewaehlt" : "") + '" data-gewerk="' + esc(x.id) + '"><div class="symbol">' + symbol(x.symbol) + "</div><h3>" + esc(x.titel) + "</h3></button>";
+      });
+      return h + "</div></section>";
+    }
+
+    if (schritt === "werte") {
+      var w = R.werte || g.vorgabe;
+      h += schrittleiste(2) + '<section class="abschnitt raster-2"><div class="karte"><h2>' + esc(g.titel) + "</h2>" +
+        '<p class="hinweis">Die Werte sind typische Vorgaben für Ihr Gewerk. Schieben Sie sie auf Ihren Betrieb.</p>' +
+        regler("mitarbeiter", "Mitarbeiter auf Baustellen", 1, 40, 1, w.mitarbeiter, "") +
+        regler("auftraege", "Aufträge bzw. Einsätze pro Monat", 1, 150, 1, w.auftraege, "") +
+        regler("angebote", "Angebote pro Monat", 0, 120, 1, w.angebote, "") +
+        regler("satz", "Stundensatz fürs Büro", 20, 80, 1, w.satz, " €") +
+        '<p class="hinweis">Stundensatz: Was eine Stunde Bürozeit kostet, inklusive Nebenkosten. Oder was Ihre eigene Stunde wert ist.</p>' +
+        '<div class="knopfreihe"><a class="knopf voll" href="#/rechner/ergebnis" id="zumErgebnis">Ergebnis anzeigen →</a><a class="knopf" href="#/rechner">← Gewerk ändern</a></div></div>' +
+        '<div class="karte vorschau"><h2>Vorschau</h2><div class="ergebnis haupt"><div class="wert" id="vorschauStd"></div><div class="was">Stunden pro Monat, die sich sparen lassen könnten</div></div><p class="hinweis" style="margin-top:12px">Im nächsten Schritt sehen Sie, welcher Ablauf wie viel ausmacht.</p></div></section>';
+      return h;
+    }
+
+    // Ergebnis
+    var e = berechne(g, R.werte || g.vorgabe);
+    var f = r.vorsichtigFaktor;
+    var max = e.liste[0] ? e.liste[0].gespart : 1;
+    h += schrittleiste(3);
+    h += '<section class="abschnitt karte ergebnis-kopf"><div><div class="hinweis" style="margin:0">' + esc(g.titel) + " · " + zahl(e.w.mitarbeiter) + " Mitarbeiter · " + zahl(e.w.auftraege) + " Aufträge · " + zahl(e.w.angebote) + " Angebote pro Monat</div>" +
+      '<h2 style="margin:6px 0 0">Geschätzte Ersparnis: <span class="gruen">' + zahl(e.summe * f / 60) + "–" + zahl(e.summe / 60) + " Std. pro Monat</span></h2>" +
+      '<p style="margin:6px 0 0">Das entspricht etwa <b>' + zahl(Math.round(e.summe * f / 60 * e.w.satz * 12 / 100) * 100) + "–" + zahl(Math.round(e.summe / 60 * e.w.satz * 12 / 100) * 100) + " € pro Jahr</b> bei " + zahl(e.w.satz) + " € pro Stunde.</p>" +
+      '<p class="hinweis" style="margin:6px 0 0">Untere Zahl: vorsichtig gerechnet (die Hälfte). Obere Zahl: Rechenbeispiel mit allen Annahmen.</p></div></section>';
+    h += '<section class="abschnitt"><h2>Wo es sich am meisten lohnt</h2><p class="hinweis">Tippen Sie auf einen Ablauf für die Annahmen und die Handy-Eingabe.</p><div class="prozesse">';
+    e.liste.forEach(function (p, i) {
+      var einheit = { mitarbeiter: "Mitarbeiter", auftrag: "Aufträge", angebot: "Angebote" }[p.je];
+      h += '<details class="prozess' + (i < 3 ? " top" : "") + '"><summary>' +
+        '<span class="p-rang">' + (i + 1) + "</span>" +
+        '<span class="p-name">' + esc(p.titel) + (i < 3 ? ' <em>Hier zuerst ansetzen</em>' : "") + "</span>" +
+        '<span class="p-balken"><i style="width:' + Math.max(4, p.gespart / max * 100) + '%"></i></span>' +
+        '<span class="p-wert">−' + stunden(p.gespart / 60) + "</span></summary>" +
+        '<div class="p-details"><p>' + esc(p.text) + "</p>" +
+        '<table><tbody><tr><td>Heute</td><td class="zahl">' + stunden(p.vorher / 60) + '</td></tr><tr><td>Automatisiert</td><td class="zahl">' + stunden(p.nachher / 60) + '</td></tr><tr class="summe"><td>Gespart pro Monat</td><td class="zahl">' + stunden(p.gespart / 60) + " ≈ " + zahl(Math.round(p.gespart / 60 * e.w.satz)) + " €</td></tr></tbody></table>" +
+        '<p class="hinweis">Annahme: ' + zahl(p.menge) + " " + einheit + " × " + zahl(p.min[0], p.min[0] % 1 ? 2 : 0) + " Min. heute, " + zahl(p.min[1], p.min[1] % 1 ? 2 : 0) + " Min. automatisiert, pro Monat.</p>" +
+        '<a class="knopf" href="#/bereich/' + esc(p.bereich) + '">Ablauf & Handy-Eingabe ansehen →</a></div></details>';
+    });
+    h += "</div></section>";
+    h += '<section class="abschnitt karte"><p class="hinweis" style="margin:0">' + esc(r.hinweis) + "</p></section>";
+    h += '<section class="abschnitt knopfreihe"><a class="knopf voll" href="#/kontakt">Kostenlose Erstanalyse</a><a class="knopf" href="#/rechner/werte">← Zahlen ändern</a><a class="knopf" href="#/rechner">Anderes Gewerk</a></section>';
     return h;
   }
+
+  function berechne(g, w) {
+    var P = I.rechner.prozesse, liste = [], summe = 0;
+    Object.keys(P).forEach(function (k) {
+      var p = P[k], min = g.minuten[k];
+      if (!min) return;
+      var menge = p.je === "mitarbeiter" ? w.mitarbeiter : p.je === "angebot" ? w.angebote : w.auftraege;
+      var vorher = menge * min[0], nachher = menge * min[1];
+      var x = { titel: p.titel, text: p.text, bereich: p.bereich, je: p.je, menge: menge, min: min, vorher: vorher, nachher: nachher, gespart: vorher - nachher };
+      summe += x.gespart; liste.push(x);
+    });
+    liste.sort(function (a, b) { return b.gespart - a.gespart; });
+    return { liste: liste, summe: summe, w: w };
+  }
+
   function regler(id, text, min, max, schritt, wert, einheit) {
     return '<div class="regler"><label for="r_' + id + '"><span>' + esc(text) + '</span><output id="o_' + id + '"></output></label>' +
       '<input type="range" id="r_' + id + '" min="' + min + '" max="' + max + '" step="' + schritt + '" value="' + wert + '" data-einheit="' + esc(einheit) + '"></div>';
   }
-  function rechnerAktiv() {
-    var r = I.rechner;
-    function wert(id) { return Number(document.getElementById("r_" + id).value); }
+
+  function rechnerAktiv(main, schritt) {
+    main.querySelectorAll("[data-gewerk]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var g = gewerkNach(b.getAttribute("data-gewerk"));
+        R.gewerk = g.id; R.werte = JSON.parse(JSON.stringify(g.vorgabe)); rSpeichern();
+        location.hash = "#/rechner/werte";
+      });
+    });
+    if (schritt !== "werte") return;
+    var g = gewerkNach(R.gewerk);
     function neu() {
-      ["mitarbeiter", "rechnungen", "satz"].forEach(function (id) {
+      var w = {};
+      ["mitarbeiter", "auftraege", "angebote", "satz"].forEach(function (id) {
         var el = document.getElementById("r_" + id);
+        w[id] = Number(el.value);
         document.getElementById("o_" + id).textContent = zahl(el.value) + el.getAttribute("data-einheit");
       });
-      var min = wert("rechnungen") * (r.minutenProRechnung + r.minutenBelegeProRechnung) + wert("mitarbeiter") * r.minutenProMitarbeiter;
-      var std = min / 60;
-      var mon = std * wert("satz");
-      var f = r.vorsichtigFaktor;
-      document.getElementById("eStd").textContent = zahl(std, std < 10 ? 1 : 0);
-      document.getElementById("eMon").textContent = zahl(Math.round(mon)) + " €";
-      document.getElementById("eJahr").textContent = zahl(Math.round(mon * 12 / 10) * 10) + " €";
-      document.getElementById("vStd").textContent = zahl(std * f, std * f < 10 ? 1 : 0);
-      document.getElementById("vJahr").textContent = zahl(Math.round(mon * 12 * f / 10) * 10) + " €";
+      R.werte = w; rSpeichern();
+      var e = berechne(g, w);
+      document.getElementById("vorschauStd").textContent = zahl(e.summe * I.rechner.vorsichtigFaktor / 60) + "–" + zahl(e.summe / 60);
     }
-    document.querySelectorAll("input[type=range]").forEach(function (el) { el.addEventListener("input", neu); });
+    main.querySelectorAll("input[type=range]").forEach(function (el) { el.addEventListener("input", neu); });
     neu();
   }
 
@@ -378,14 +447,14 @@
     var main = document.getElementById("inhalt");
     var nav = "start", html;
     if (teile[0] === "bereich") html = ansichtBereich(teile[1]);
-    else if (teile[0] === "rechner") { html = ansichtRechner(); nav = "rechner"; }
+    else if (teile[0] === "rechner") { html = ansichtRechner(teile[1] || ""); nav = "rechner"; }
     else if (teile[0] === "arbeitsweise") { html = ansichtArbeitsweise(); nav = "arbeitsweise"; }
     else if (teile[0] === "praxis") { html = ansichtPraxis(); nav = "arbeitsweise"; }
     else if (teile[0] === "kontakt") { html = ansichtKontakt(); nav = "kontakt"; }
     else html = ansichtStart();
     main.innerHTML = html;
     document.querySelectorAll("[data-nav]").forEach(function (a) { a.classList.toggle("aktiv", a.getAttribute("data-nav") === nav); });
-    if (teile[0] === "rechner") rechnerAktiv();
+    if (teile[0] === "rechner") rechnerAktiv(main, teile[1] || "");
     maskeAktiv(main);
     main.querySelectorAll(".sprungleiste button").forEach(function (b) {
       b.addEventListener("click", function () {

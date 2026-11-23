@@ -475,14 +475,52 @@ window.INHALTE = {
 
   /* ---------------------------------------------------------------- */
   rechner: {
-    ueberschrift: "Was spart das in Ihrem Betrieb?",
-    einleitung: "Stellen Sie drei Werte ein. Der Rechner nutzt dieselben Annahmen wie die Beispiele auf dieser Seite.",
-    // Annahmen in Minuten. Hier können Sie die Werte anpassen.
-    minutenProRechnung: 11.25,   // Rechnungen: 15 Min. vorher, 3,75 Min. nachher
-    minutenBelegeProRechnung: 6, // 1,5 Belege pro Rechnung, je 4 Min. gespart
-    minutenProMitarbeiter: 66,   // Zeiterfassung: 84 Min. vorher, 18 Min. nachher
-    vorsichtigFaktor: 0.5,       // „Vorsichtig“ = die Hälfte
-    hinweis: "Das ist eine Beispielrechnung, kein Versprechen. Bestellungen, Baustellen, Angebote und Termine sind nicht eingerechnet. Einrichtung und Betreuung kosten Geld und sind hier nicht abgezogen. Wie viel es in Ihrem Betrieb wirklich ist, zeigt die kostenlose Erstanalyse."
+    ueberschrift: "Was spart Automatisierung in Ihrem Betrieb?",
+    einleitung: "Wählen Sie Ihr Gewerk, passen Sie vier Zahlen an und sehen Sie für jeden Arbeitsablauf, wie viel Zeit sich sparen lässt.",
+    vorsichtigFaktor: 0.5,
+    hinweis: "Das ist eine Beispielrechnung, kein Versprechen. Die Minutenwerte sind Schätzungen für typische Betriebe, keine Messungen. Einrichtung und Betreuung kosten Geld und sind nicht abgezogen. Meist startet man mit einem Ablauf, nicht mit allen gleichzeitig. Wie viel es bei Ihnen wirklich ist, zeigt die kostenlose Erstanalyse.",
+
+    /* Die Arbeitsabläufe. "je" sagt, womit multipliziert wird:
+       mitarbeiter, auftrag, angebot. Minuten pro Einheit und Monat. */
+    prozesse: {
+      zeit:      { titel: "Zeiterfassung & Lohn",        je: "mitarbeiter", bereich: "mitarbeiter", text: "Stunden am Handy statt Stundenzettel. Lohnübersicht kommt fertig ans Lohnbüro." },
+      termine:   { titel: "Einsatzplanung",              je: "mitarbeiter", bereich: "termine",     text: "Jeder sieht seinen Plan am Handy. Änderungen gehen nur an die Betroffenen." },
+      angebot:   { titel: "Aufmaß & Angebote",           je: "angebot",     bereich: "angebote",    text: "Aufmaß am Handy, Angebot aus Vorlagen und Preisliste. Sie prüfen und geben frei." },
+      nachfassen:{ titel: "Anfragen & Nachfassen",       je: "angebot",     bereich: "anfragen",    text: "Alle Anfragen und Messekontakte in einer Liste. Erinnerung, wenn ein Angebot unbeantwortet bleibt." },
+      material:  { titel: "Material & Bestellung",       je: "auftrag",     bereich: "material",    text: "Material von der Baustelle melden. Sammelbestellung nach Ihrer Freigabe." },
+      doku:      { titel: "Baustellen-Doku & Nachkalkulation", je: "auftrag", bereich: "baustellen", text: "Fotos, Notizen, Stunden und Material landen automatisch beim richtigen Auftrag." },
+      rechnung:  { titel: "Rechnungen",                  je: "auftrag",     bereich: "rechnungen",  text: "Aus Stunden und Material entsteht ein Rechnungsentwurf. Sie geben frei." },
+      belege:    { titel: "Belege & Buchhaltung",        je: "auftrag",     bereich: "buchhaltung", text: "Lieferantenrechnungen und Quittungen werden gesammelt und zugeordnet." }
+    },
+
+    /* Gewerke: Vorgabewerte und Minuten [vorher, nachher] je Einheit.
+       Alle Werte sind Annahmen und können hier angepasst werden. */
+    gewerke: [
+      { id: "fenster", titel: "Fenster & Türen", symbol: "fenster",
+        vorgabe: { mitarbeiter: 8, auftraege: 20, angebote: 40, satz: 40 },
+        minuten: { zeit: [84, 18], termine: [120, 66], angebot: [45, 25], nachfassen: [6, 1], material: [30, 10], doku: [25, 8], rechnung: [30, 10], belege: [12, 4] } },
+      { id: "dach", titel: "Dach & Zimmerei", symbol: "dach",
+        vorgabe: { mitarbeiter: 10, auftraege: 8, angebote: 15, satz: 40 },
+        minuten: { zeit: [84, 18], termine: [120, 66], angebot: [90, 45], nachfassen: [6, 1], material: [40, 12], doku: [60, 20], rechnung: [40, 12], belege: [16, 5] } },
+      { id: "schreiner", titel: "Schreinerei & Treppen", symbol: "schreiner",
+        vorgabe: { mitarbeiter: 6, auftraege: 10, angebote: 15, satz: 40 },
+        minuten: { zeit: [84, 18], termine: [120, 66], angebot: [90, 45], nachfassen: [6, 1], material: [30, 10], doku: [30, 10], rechnung: [30, 10], belege: [12, 4] } },
+      { id: "ofen", titel: "Ofen- & Kaminbau", symbol: "ofen",
+        vorgabe: { mitarbeiter: 4, auftraege: 6, angebote: 12, satz: 40 },
+        minuten: { zeit: [84, 18], termine: [120, 66], angebot: [60, 25], nachfassen: [6, 1], material: [30, 10], doku: [25, 8], rechnung: [30, 10], belege: [12, 4] } },
+      { id: "sanierung", titel: "Sanierung & Fliesen", symbol: "sanierung",
+        vorgabe: { mitarbeiter: 6, auftraege: 12, angebote: 15, satz: 40 },
+        minuten: { zeit: [84, 18], termine: [120, 66], angebot: [45, 20], nachfassen: [6, 1], material: [30, 10], doku: [45, 15], rechnung: [30, 10], belege: [12, 4] } },
+      { id: "shk", titel: "Heizung & Sanitär", symbol: "shk",
+        vorgabe: { mitarbeiter: 5, auftraege: 40, angebote: 15, satz: 35 },
+        minuten: { zeit: [84, 18], termine: [120, 66], angebot: [40, 15], nachfassen: [6, 1], material: [12, 4], doku: [10, 3], rechnung: [15, 3.75], belege: [6, 2] } },
+      { id: "elektro", titel: "Elektro", symbol: "elektro",
+        vorgabe: { mitarbeiter: 6, auftraege: 40, angebote: 12, satz: 35 },
+        minuten: { zeit: [84, 18], termine: [120, 66], angebot: [40, 15], nachfassen: [6, 1], material: [12, 4], doku: [10, 3], rechnung: [15, 3.75], belege: [6, 2] } },
+      { id: "garten", titel: "Garten- & Landschaftsbau", symbol: "garten",
+        vorgabe: { mitarbeiter: 6, auftraege: 15, angebote: 15, satz: 35 },
+        minuten: { zeit: [84, 18], termine: [120, 66], angebot: [45, 20], nachfassen: [6, 1], material: [30, 10], doku: [30, 10], rechnung: [30, 10], belege: [12, 4] } }
+    ]
   },
 
   /* ---------------------------------------------------------------- */
