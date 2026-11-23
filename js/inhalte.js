@@ -12,7 +12,7 @@ window.INHALTE = {
 
   start: {
     ueberschrift: "Weniger Papierkram. Mehr Zeit fürs Handwerk.",
-    unterzeile: "Ich schaue mir an, wie Ihr Büro heute arbeitet. Dann automatisiere ich die Schritte, die Zeit fressen. Sie arbeiten weiter mit Ihren gewohnten Programmen.",
+    unterzeile: "Wir schauen uns an, wie Ihr Büro heute arbeitet. Dann automatisieren wir die Schritte, die Zeit fressen. Sie arbeiten weiter mit Ihren gewohnten Programmen.",
     kachelHinweis: "Tippen Sie auf einen Bereich. Sie sehen den Ablauf heute, den Ablauf automatisiert und ein Rechenbeispiel.",
     beispielHinweis: "Alle Beispiele nutzen einen erfundenen Betrieb: Holzmann Haustechnik (Heizung und Sanitär, 5 Mitarbeiter, 40 Rechnungen pro Monat). Alle Zeitangaben sind Beispielrechnungen mit offenen Annahmen, keine Versprechen."
   },
@@ -163,7 +163,7 @@ window.INHALTE = {
         { typ: "mensch", text: "Sie schauen nur auf das, was unklar ist." },
         { typ: "auto", text: "Am Monatsende kommt eine Liste: Diese Belege fehlen noch." }
       ],
-      merksatz: "Was Lexware schon selbst kann, nutzen wir. Ich sorge dafür, dass alles vollständig und sauber dort ankommt.",
+      merksatz: "Was Lexware schon selbst kann, nutzen wir. Wir sorgen dafür, dass alles vollständig und sauber dort ankommt.",
       optionen: [
         { titel: "Belegpostfach", text: "Lieferanten schicken Rechnungen an eine feste Adresse. Der Rest läuft von allein." },
         { titel: "E-Rechnungen lesen", text: "Das neue Pflichtformat vom Großhändler wird ausgelesen und lesbar abgelegt." },
@@ -526,7 +526,7 @@ window.INHALTE = {
   /* ---------------------------------------------------------------- */
   praxis: {
     ueberschrift: "Schon im Einsatz: Hausmeisterservice aus dem Raum Aichach",
-    text: "Für einen Hausmeisterservice habe ich Zeiterfassung, Lohn und Rechnungen automatisiert. Das läuft heute im Alltag.",
+    text: "Arthur hat für einen Hausmeisterservice Zeiterfassung, Lohn und Rechnungen automatisiert. Das läuft heute im Alltag.",
     punkte: [
       "Mitarbeiter erfassen ihre Zeiten am Handy über einen persönlichen Link. Entweder Arbeitszeit mit Pause oder Objekteinsatz mit Objekt, Adresse, Anzahl Mitarbeiter, Pause, Werkzeugverschleiß und Großgerät.",
       "Stunden, Lohn und Rechnungsbeträge werden automatisch berechnet.",
@@ -534,20 +534,32 @@ window.INHALTE = {
       "Am Monatsletzten kommt eine Lohnübersicht per E-Mail. Bei Minijobbern wird die Verdienstgrenze beachtet, Stunden darüber gehen in den Folgemonat.",
       "Jeden Monat läuft ein automatisches Backup."
     ],
-    technik: "Technik in einem Satz: n8n (ein Werkzeug, das Programme miteinander verbindet) auf einem Server in Deutschland, dazu eine Tabelle und Lexware Office."
+    technik: "Technik in einem Satz: n8n (ein Werkzeug, das Programme miteinander verbindet) auf einem Server in Deutschland, dazu eine Tabelle und Lexware Office.",
+    weitereUeberschrift: "Weitere Abläufe, die wir schon gebaut haben",
+    weitere: [
+      { titel: "Eingangsrechnungen einsammeln", text: "Holt Rechnungen aus dem Postfach, liest sie aus, erkennt Doppelte und legt sie in Lexware Office ab, mit dem Hinweis „zu prüfen“. Am Monatsende kommt eine Liste der fehlenden Rechnungen.", stand: "Läuft im eigenen Betrieb (Nils)" },
+      { titel: "Angebotsentwurf aus einer Anfrage", text: "Eine Anfrage per Mail, auch mit Plänen oder Scans, wird zu einem Angebotsentwurf mit Positionen aus früheren Angeboten. Ein Mensch prüft und gibt frei.", stand: "Gebaut und an einem Ingenieurbüro getestet (Nils)" }
+    ],
+    ehrlich: "Ehrlich gesagt: Abgeschlossene Projekte im Handwerk mit Vorher-nachher-Zahlen haben wir noch nicht. Deshalb suchen wir Pilotbetriebe."
   },
 
   /* ---------------------------------------------------------------- */
   arbeitsweise: {
-    ueberschrift: "Wie ich arbeite",
+    ueberschrift: "So arbeiten wir",
+    team: [
+      { name: "Arthur Reschke", schwerpunkt: "Baustelle & Mitarbeiter", text: "Hat für einen Hausmeisterservice Zeiterfassung am Handy, Lohnübersicht und Rechnungsentwürfe in Lexware automatisiert. Das läuft dort im Alltag." },
+      { name: "Nils Thormann", schwerpunkt: "Büro, Belege & Angebote", text: "Automatisiert mit Synapt Büroabläufe, bisher für Agenturen. Gebaut: Eingangsrechnungen automatisch nach Lexware Office bringen und Angebotsentwürfe aus Anfragen erstellen." }
+    ],
+    teamUeberschrift: "Wer wir sind",
+    teamEinleitung: "Wir sind zu zweit. Sie haben immer einen festen Ansprechpartner.",
     schritte: [
-      { titel: "Analyse", text: "Ich komme in Ihren Betrieb und schaue zu, wie Büro und Baustelle heute zusammenarbeiten. Sie bekommen eine kurze Liste: Wo geht Zeit verloren, was lässt sich automatisieren, was nicht." },
+      { titel: "Analyse", text: "Wir kommen in Ihren Betrieb und schauen zu, wie Büro und Baustelle heute zusammenarbeiten. Sie bekommen eine kurze Liste: Wo geht Zeit verloren, was lässt sich automatisieren, was nicht." },
       { titel: "Pilot", text: "Wir starten mit einem Ablauf, z. B. der Zeiterfassung. Klein, überschaubar, mit echten Daten. Nach wenigen Wochen sehen Sie, ob es passt." },
       { titel: "Umsetzung", text: "Was im Pilot funktioniert, bauen wir aus. Schritt für Schritt, ohne den Betrieb lahmzulegen." },
-      { titel: "Betreuung", text: "Ich bleibe Ihr Ansprechpartner. Wenn sich etwas ändert, passe ich es an." }
+      { titel: "Betreuung", text: "Wir bleiben Ihre Ansprechpartner. Wenn sich etwas ändert, passen wir es an." }
     ],
     versprechen: [
-      { titel: "Ihre Konten, Server in Deutschland", text: "Die Abläufe laufen auf Ihren Konten und auf einem Server in Deutschland. Sie behalten alles, ich habe nur Zugang zur Betreuung." },
+      { titel: "Ihre Konten, Server in Deutschland", text: "Die Abläufe laufen auf Ihren Konten und auf einem Server in Deutschland. Sie behalten alles, wir haben nur Zugang zur Betreuung." },
       { titel: "Ihre Programme bleiben", text: "Sie arbeiten weiter mit Lexware oder dem, was Sie heute nutzen." },
       { titel: "Nichts ohne Freigabe", text: "Keine Rechnung, keine Mahnung, keine Bestellung geht ohne Ihren Klick raus." },
       { titel: "Verständlich", text: "Sie bekommen eine einfache Anleitung, keine IT-Sprache." }
@@ -558,9 +570,9 @@ window.INHALTE = {
   kontakt: {
     band: "Gespräch nach der Messe",
     ueberschrift: "Kostenlose Erstanalyse",
-    text: "Ich komme in Ihren Betrieb und schaue mir Ihre Büroabläufe an. Etwa 90 Minuten. Danach wissen Sie, wo sich Automatisierung lohnt und wo nicht. Kostenlos und unverbindlich.",
+    text: "Wir kommen in Ihren Betrieb und schauen uns Ihre Büroabläufe an. Etwa 90 Minuten. Danach wissen Sie, wo sich Automatisierung lohnt und wo nicht. Kostenlos und unverbindlich.",
     qrText: "QR-Code abfotografieren und die Seite in Ruhe zu Hause ansehen.",
-    pilotHinweis: "Ich suche gerade Pilotbetriebe, die mit mir starten."
+    pilotHinweis: "Wir suchen gerade Pilotbetriebe, die mit uns starten."
   },
 
   /* ---------------------------------------------------------------- */

@@ -19,8 +19,14 @@ window.EINSTELLUNGEN = {
   // Ihre E-Mail-Adresse  >>> BITTE PRÜFEN <<<
   email: "Arthur@reschero.de",
 
-  // Ihr Name, wie er auf der Seite stehen soll
-  name: "Arthur Reschke",
+  // Namen, wie sie auf der Seite stehen sollen
+  name: "Arthur Reschke & Nils Thormann",
+
+  // Ansprechpartner auf der Kontaktseite (Name und E-Mail)
+  kontakte: [
+    { name: "Arthur Reschke", email: "Arthur@reschero.de" },
+    { name: "Nils Thormann", email: "nils@synaptsystems.de" }
+  ],
 
   // Messe-Hinweis oben auf der Startseite. Leer lassen = kein Hinweis.
   messeHinweis: "",

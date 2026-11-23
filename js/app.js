@@ -87,7 +87,7 @@
     h += '<section class="abschnitt teaser">';
     h += '<a class="karte" href="#/praxis" style="text-decoration:none;color:inherit"><span class="beispiel-marke" style="border-style:solid;color:var(--gruen);border-color:var(--gruen)">Echt im Einsatz</span><h3 style="margin-top:10px">' + esc(I.praxis.ueberschrift) + "</h3><p>" + esc(I.praxis.text) + '</p><span class="pfeil" style="color:var(--orange-dunkel);font-weight:700">Mehr erfahren →</span></a>';
     h += '<a class="karte" href="#/rechner" style="text-decoration:none;color:inherit"><h3>Ersparnis-Rechner</h3><p>Gewerk wählen, Zahlen anpassen und sehen, welcher Ablauf in Ihrem Betrieb wie viel Zeit spart. Mit offenen Annahmen.</p><span style="color:var(--orange-dunkel);font-weight:700">Zum Rechner →</span></a>';
-    h += '<a class="karte" href="#/arbeitsweise" style="text-decoration:none;color:inherit"><h3>So arbeite ich</h3><p>Analyse, Pilot, Umsetzung, Betreuung. Ihre Programme bleiben. Nichts geht ohne Ihre Freigabe raus.</p><span style="color:var(--orange-dunkel);font-weight:700">Ansehen →</span></a>';
+    h += '<a class="karte" href="#/arbeitsweise" style="text-decoration:none;color:inherit"><h3>So arbeiten wir</h3><p>Analyse, Pilot, Umsetzung, Betreuung. Ihre Programme bleiben. Nichts geht ohne Ihre Freigabe raus.</p><span style="color:var(--orange-dunkel);font-weight:700">Ansehen →</span></a>';
     h += "</section>";
     return h;
   }
@@ -311,9 +311,18 @@
 
   function ansichtArbeitsweise() {
     var a = I.arbeitsweise;
-    var h = '<section class="abschnitt"><h1>' + esc(a.ueberschrift) + '</h1></section><section class="abschnitt schritte4">';
+    var h = '<section class="abschnitt"><h1>' + esc(a.ueberschrift) + '</h1></section>';
+    if (a.team) {
+      h += '<section class="abschnitt"><h2>' + esc(a.teamUeberschrift) + '</h2><p>' + esc(a.teamEinleitung) + '</p><div class="team">';
+      a.team.forEach(function (t) {
+        var ini = t.name.split(" ").map(function (x) { return x[0]; }).join("");
+        h += '<div class="karte person"><div class="initialen">' + esc(ini) + '</div><div><h3>' + esc(t.name) + '</h3><div class="schwerpunkt">' + esc(t.schwerpunkt) + '</div><p>' + esc(t.text) + "</p></div></div>";
+      });
+      h += "</div></section>";
+    }
+    h += '<section class="abschnitt"><h2>In vier Schritten</h2><div class="schritte4">';
     a.schritte.forEach(function (s) { h += '<div class="schritt"><h3>' + esc(s.titel) + "</h3><p>" + esc(s.text) + "</p></div>"; });
-    h += '</section><section class="abschnitt karte"><h2>Darauf können Sie sich verlassen</h2><div class="versprechen">';
+    h += '</div></section><section class="abschnitt karte"><h2>Darauf können Sie sich verlassen</h2><div class="versprechen">';
     a.versprechen.forEach(function (v) { h += "<div><h3>" + esc(v.titel) + "</h3><p>" + esc(v.text) + "</p></div>"; });
     h += '</div></section><section class="abschnitt knopfreihe"><a class="knopf voll" href="#/kontakt">Kostenlose Erstanalyse</a><a class="knopf" href="#/praxis">Praxisbeispiel ansehen</a></section>';
     return h;
@@ -325,6 +334,11 @@
     h += '<section class="abschnitt karte"><ol class="ablauf neu">';
     p.punkte.forEach(function (t) { h += '<li class="auto"><span class="marke">Läuft automatisch</span>' + esc(t) + "</li>"; });
     h += "</ol><p class=\"hinweis\" style=\"margin-top:14px\">" + esc(p.technik) + "</p></section>";
+    if (p.weitere) {
+      h += '<section class="abschnitt"><h2>' + esc(p.weitereUeberschrift) + '</h2><div class="raster-2">';
+      p.weitere.forEach(function (w) { h += '<div class="karte"><span class="beispiel-marke" style="border-style:solid">' + esc(w.stand) + '</span><h3 style="margin-top:10px">' + esc(w.titel) + "</h3><p style=\"margin:0\">" + esc(w.text) + "</p></div>"; });
+      h += "</div>" + (p.ehrlich ? '<p class="hinweis" style="margin-top:14px">' + esc(p.ehrlich) + "</p>" : "") + "</section>";
+    }
     h += '<section class="abschnitt knopfreihe"><a class="knopf voll" href="#/kontakt">So etwas für meinen Betrieb</a><a class="knopf" href="#/bereich/mitarbeiter">Bereich Mitarbeiter ansehen</a></section>';
     return h;
   }
@@ -335,8 +349,10 @@
     var h = '<section class="abschnitt kontakt-box">';
     h += '<div class="karte dunkel"><div class="messe-band">' + esc(k.band || "") + '</div><h1>' + esc(k.ueberschrift) + "</h1><p>" + esc(k.text) + "</p>";
     if (k.pilotHinweis) h += '<p style="font-weight:700;color:#fff">' + esc(k.pilotHinweis) + "</p>";
-    h += '<a class="mail-knopf" href="mailto:' + esc(E.email) + "?subject=" + encodeURIComponent("Kostenlose Erstanalyse") + '">' + symbol("mail") + "<span>" + esc(E.email) + "</span></a>";
-    if (E.name) h += '<p style="margin-top:16px">' + esc(E.name) + " · Reschero</p>";
+    var kontakte = E.kontakte && E.kontakte.length ? E.kontakte : [{ name: E.name, email: E.email }];
+    kontakte.forEach(function (k2) {
+      h += '<a class="mail-knopf" href="mailto:' + esc(k2.email) + "?subject=" + encodeURIComponent("Kostenlose Erstanalyse") + '">' + symbol("mail") + '<span><small>' + esc(k2.name) + "</small>" + esc(k2.email) + "</span></a>";
+    });
     h += "</div>";
     h += '<div class="karte qr-karte"><h2>Zum Mitnehmen</h2><div class="qr" id="qr"></div><p style="margin-top:12px">' + esc(k.qrText) + "</p></div>";
     h += "</section>";

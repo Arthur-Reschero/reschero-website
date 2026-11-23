@@ -340,3 +340,12 @@ button.kachel { font: inherit; text-align: left; cursor: pointer; }
 .ablauf-wahl .m-chip:not(.an) { color: var(--grau); text-decoration: line-through; }
 .p-name em { text-transform: none !important; letter-spacing: 0 !important; color: var(--grau) !important; font-weight: 600; font-size: .82rem !important; }
 .erklaerung { border-left: 6px solid var(--anthrazit); }
+.team { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.person { display: flex; gap: 18px; align-items: flex-start; }
+.initialen { width: 64px; height: 64px; border-radius: 50%; background: var(--anthrazit); color: var(--weiss); display: grid; place-items: center; font-weight: 800; font-size: 1.3rem; flex-shrink: 0; }
+.person h3 { margin: 0; }
+.schwerpunkt { color: var(--orange-dunkel); font-weight: 700; font-size: .85rem; margin: 2px 0 8px; }
+.person p { margin: 0; font-size: .95rem; color: var(--anthrazit-hell); }
+.mail-knopf span small { display: block; font-size: .75rem; font-weight: 700; opacity: .85; }
+.mail-knopf + .mail-knopf { margin-top: 10px; }
+@media (max-width: 720px) { .team { grid-template-columns: 1fr; } .hauptnav a { font-size: .74rem; padding: 8px 4px; } }
