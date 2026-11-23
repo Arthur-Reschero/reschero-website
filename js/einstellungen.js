@@ -17,7 +17,7 @@ window.EINSTELLUNGEN = {
   zugangsschluessel: "messe-lnpwm8zzto",
 
   // Ihre E-Mail-Adresse  >>> BITTE PRÜFEN <<<
-  email: "arthur@reschero.de",
+  email: "Arthur@reschero.de",
 
   // Ihr Name, wie er auf der Seite stehen soll
   name: "Arthur Reschke",
@@ -31,7 +31,7 @@ window.EINSTELLUNGEN = {
   // Impressum und Datenschutz unten auf der Seite verlinken?
   // true = anzeigen, false = ausblenden. Vorher die Platzhalter in
   // impressum.html und datenschutz.html ausfüllen!
-  impressumAnzeigen: false,
+  impressumAnzeigen: true,
 
   // Messe-Modus: Nach so vielen Minuten ohne Berührung springt die Seite
   // zurück zur Startseite (nur wenn der Messe-Modus eingeschaltet ist).
