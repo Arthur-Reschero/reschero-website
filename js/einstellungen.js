@@ -17,7 +17,7 @@ window.EINSTELLUNGEN = {
   zugangsschluessel: "messe-lnpwm8zzto",
 
   // Ihre E-Mail-Adresse  >>> BITTE PRÜFEN <<<
-  email: "kontakt@reschero.de",
+  email: "arthur@reschero.de",
 
   // Ihr Name, wie er auf der Seite stehen soll
   name: "Arthur Reschke",
