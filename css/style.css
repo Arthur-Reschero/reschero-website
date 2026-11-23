@@ -336,3 +336,7 @@ button.kachel { font: inherit; text-align: left; cursor: pointer; }
 @media print {
   .kopf, .sprungleiste, .fuss, .messe-knopf { display: none; }
 }
+.ablauf-wahl { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+.ablauf-wahl .m-chip:not(.an) { color: var(--grau); text-decoration: line-through; }
+.p-name em { text-transform: none !important; letter-spacing: 0 !important; color: var(--grau) !important; font-weight: 600; font-size: .82rem !important; }
+.erklaerung { border-left: 6px solid var(--anthrazit); }

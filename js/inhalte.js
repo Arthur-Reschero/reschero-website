@@ -78,15 +78,6 @@ window.INHALTE = {
           ["Entwürfe prüfen und freigeben", "–", "2 Std."]
         ],
         vorher: 10, nachher: 2.5
-      },
-      infokasten: {
-        titel: "Gut zu wissen: E-Rechnung",
-        text: "Seit 1.1.2025 müssen alle Betriebe E-Rechnungen von Geschäftskunden empfangen können. Ab 1.1.2027 müssen Betriebe mit mehr als 800.000 € Vorjahresumsatz E-Rechnungen an Geschäftskunden schicken, ab 1.1.2028 alle. Eine PDF per E-Mail zählt nicht als E-Rechnung. Rechnungen an Privatkunden sind ausgenommen. Stand: November 2026.",
-        quellen: [
-          ["IHK Stuttgart", "https://www.ihk.de/stuttgart/fuer-unternehmen/recht-und-steuern/steuerrecht/steuermeldungen/e-rechnungen-5864496"],
-          ["IHK Rhein-Neckar", "https://www.ihk.de/rhein-neckar/recht/steuerrecht/umsatzsteuer/e-rechnungspflicht-5931752"],
-          ["IHK Essen", "https://www.ihk.de/meo/recht-und-steuern/steuerrecht/umsatzsteuer/e-rechnung-ab-01-01-2025-6277246"]
-        ]
       }
     },
 
@@ -151,34 +142,43 @@ window.INHALTE = {
     {
       id: "buchhaltung",
       titel: "Buchhaltung",
-      untertitel: "Belege & Steuerberater",
+      untertitel: "Belege & Großhändler-Rechnungen",
       symbol: "buchhaltung",
-      kurz: "Belege sammeln sich von allein. Ihr Steuerberater bekommt alles komplett.",
+      kurz: "Rechnungen vom Großhändler landen vollständig und sauber in Lexware.",
       heute: {
         schritte: [
-          "Belege kommen auf vielen Wegen: Papier im Auto, PDF per Mail, Tankquittung im Geldbeutel.",
-          "Einmal im Monat wird alles in einen Ordner sortiert.",
-          "Der Kontoauszug wird Zeile für Zeile mit den Belegen verglichen.",
+          "Rechnungen kommen auf vielen Wegen: Papier im Auto, PDF per Mail, Tankquittung im Geldbeutel.",
+          "Einmal im Monat wird alles zusammengesucht und in Lexware oder einen Ordner gebracht.",
+          "E-Rechnungen vom Großhändler lassen sich oft nicht einfach öffnen oder lesen.",
           "Fehlende Belege werden gesucht oder beim Lieferanten nachgefragt.",
-          "Der Ordner geht zum Steuerberater. Der fragt nach fehlenden Belegen."
+          "Der Steuerberater fragt Wochen später nach, was noch fehlt."
         ],
-        probleme: ["Belege fehlen", "Quittungen verblassen", "Suche kostet Stunden", "Rückfragen Wochen später"]
+        probleme: ["Belege fehlen", "E-Rechnung nicht lesbar", "Suche kostet Stunden", "Rückfragen Wochen später"]
       },
       automatisch: [
-        { typ: "auto", text: "Rechnungen per Mail landen in einem eigenen Postfach und werden automatisch in Lexware hochgeladen." },
-        { typ: "auto", text: "Papierbelege: Foto mit dem Handy, fertig." },
-        { typ: "auto", text: "Betrag, Datum und Lieferant werden ausgelesen." },
-        { typ: "auto", text: "Belege werden den Zahlungen auf dem Konto zugeordnet, soweit es eindeutig ist." },
-        { typ: "mensch", text: "Was nicht eindeutig ist, kommt auf eine kurze Prüfliste für Sie." },
-        { typ: "auto", text: "Am Monatsanfang kommt eine Erinnerung: „Diese 3 Belege fehlen noch.“" }
+        { typ: "auto", text: "Rechnungen von Lieferanten kommen per Mail in ein eigenes Postfach." },
+        { typ: "auto", text: "PDF-Rechnungen und E-Rechnungen werden gelesen: Lieferant, Datum, Betrag." },
+        { typ: "auto", text: "Der Beleg landet in Lexware Office mit dem Hinweis „zu prüfen“. Doppelte werden erkannt." },
+        { typ: "auto", text: "Belege und Kontobewegungen ordnet Lexware selbst zu. Das kann Lexware schon." },
+        { typ: "mensch", text: "Sie schauen nur auf das, was unklar ist." },
+        { typ: "auto", text: "Am Monatsende kommt eine Liste: Diese Belege fehlen noch." }
       ],
-      merksatz: "Ich ersetze nicht Ihren Steuerberater. Ich automatisiere das Sammeln, Sortieren und Zuordnen.",
+      merksatz: "Was Lexware schon selbst kann, nutzen wir. Ich sorge dafür, dass alles vollständig und sauber dort ankommt.",
       optionen: [
         { titel: "Belegpostfach", text: "Lieferanten schicken Rechnungen an eine feste Adresse. Der Rest läuft von allein." },
-        { titel: "Foto-Upload vom Handy", text: "Auch für Tankquittungen und Baumarkt-Bons." },
+        { titel: "E-Rechnungen lesen", text: "Das neue Pflichtformat vom Großhändler wird ausgelesen und lesbar abgelegt." },
         { titel: "Fehlende-Belege-Liste", text: "Einmal im Monat, mit Betrag und Datum." },
-        { titel: "Monatsmappe für den Steuerberater", text: "Über die Schnittstelle von Lexware." }
+        { titel: "Material zum Auftrag", text: "Positionen aus Großhändler-Rechnungen werden dem richtigen Auftrag zugeordnet." }
       ],
+      infokasten: {
+        titel: "Gut zu wissen: E-Rechnung",
+        text: "Seit 1.1.2025 müssen alle Betriebe E-Rechnungen von Geschäftskunden empfangen können, zum Beispiel vom Großhändler. Eine PDF per E-Mail zählt nicht als E-Rechnung. Wer selbst Rechnungen an Geschäftskunden schreibt, muss ab 1.1.2027 (über 800.000 € Vorjahresumsatz) bzw. ab 1.1.2028 (alle) E-Rechnungen ausstellen. Rechnungen an Privatkunden sind ausgenommen. Stand: November 2026.",
+        quellen: [
+          ["IHK Stuttgart", "https://www.ihk.de/stuttgart/fuer-unternehmen/recht-und-steuern/steuerrecht/steuermeldungen/e-rechnungen-5864496"],
+          ["IHK Rhein-Neckar", "https://www.ihk.de/rhein-neckar/recht/steuerrecht/umsatzsteuer/e-rechnungspflicht-5931752"],
+          ["IHK Essen", "https://www.ihk.de/meo/recht-und-steuern/steuerrecht/umsatzsteuer/e-rechnung-ab-01-01-2025-6277246"]
+        ]
+      },
       beispiel: {
         titel: "Belege im März",
         untertitel: "Frei erfunden.",
@@ -476,48 +476,48 @@ window.INHALTE = {
   /* ---------------------------------------------------------------- */
   rechner: {
     ueberschrift: "Was spart Automatisierung in Ihrem Betrieb?",
-    einleitung: "Wählen Sie Ihr Gewerk, passen Sie vier Zahlen an und sehen Sie für jeden Arbeitsablauf, wie viel Zeit sich sparen lässt.",
+    einleitung: "Wählen Sie Ihr Gewerk, passen Sie die Zahlen an und wählen Sie die Abläufe, die es bei Ihnen gibt. Dann sehen Sie für jeden Ablauf, wie viel Zeit sich sparen lässt und wie die Zahl zustande kommt.",
     vorsichtigFaktor: 0.5,
     hinweis: "Das ist eine Beispielrechnung, kein Versprechen. Die Minutenwerte sind Schätzungen für typische Betriebe, keine Messungen. Einrichtung und Betreuung kosten Geld und sind nicht abgezogen. Meist startet man mit einem Ablauf, nicht mit allen gleichzeitig. Wie viel es bei Ihnen wirklich ist, zeigt die kostenlose Erstanalyse.",
 
     /* Die Arbeitsabläufe. "je" sagt, womit multipliziert wird:
        mitarbeiter, auftrag, angebot. Minuten pro Einheit und Monat. */
     prozesse: {
-      zeit:      { titel: "Zeiterfassung & Lohn",        je: "mitarbeiter", bereich: "mitarbeiter", text: "Stunden am Handy statt Stundenzettel. Lohnübersicht kommt fertig ans Lohnbüro." },
-      termine:   { titel: "Einsatzplanung",              je: "mitarbeiter", bereich: "termine",     text: "Jeder sieht seinen Plan am Handy. Änderungen gehen nur an die Betroffenen." },
-      angebot:   { titel: "Aufmaß & Angebote",           je: "angebot",     bereich: "angebote",    text: "Aufmaß am Handy, Angebot aus Vorlagen und Preisliste. Sie prüfen und geben frei." },
-      nachfassen:{ titel: "Anfragen & Nachfassen",       je: "angebot",     bereich: "anfragen",    text: "Alle Anfragen und Messekontakte in einer Liste. Erinnerung, wenn ein Angebot unbeantwortet bleibt." },
-      material:  { titel: "Material & Bestellung",       je: "auftrag",     bereich: "material",    text: "Material von der Baustelle melden. Sammelbestellung nach Ihrer Freigabe." },
-      doku:      { titel: "Baustellen-Doku & Nachkalkulation", je: "auftrag", bereich: "baustellen", text: "Fotos, Notizen, Stunden und Material landen automatisch beim richtigen Auftrag." },
-      rechnung:  { titel: "Rechnungen",                  je: "auftrag",     bereich: "rechnungen",  text: "Aus Stunden und Material entsteht ein Rechnungsentwurf. Sie geben frei." },
-      belege:    { titel: "Belege & Buchhaltung",        je: "auftrag",     bereich: "buchhaltung", text: "Lieferantenrechnungen und Quittungen werden gesammelt und zugeordnet." }
+      zeit:      { titel: "Zeiterfassung & Lohn",        je: "mitarbeiter", bereich: "mitarbeiter", text: "Stunden am Handy statt Stundenzettel. Lohnübersicht kommt fertig ans Lohnbüro.", warum: "Stundenzettel müssen nicht mehr eingesammelt, abgetippt und nachgerechnet werden." },
+      termine:   { titel: "Einsatzplanung",              je: "mitarbeiter", bereich: "termine",     text: "Jeder sieht seinen Plan am Handy. Änderungen gehen nur an die Betroffenen.", warum: "Weniger Anrufe und WhatsApps beim Planen und Umplanen." },
+      angebot:   { titel: "Angebote", titelAufmass: "Aufmaß & Angebote",           je: "angebot",     bereich: "angebote",    text: "Aufmaß am Handy, Angebot aus Vorlagen und Preisliste. Sie prüfen und geben frei.", warum: "Notizen müssen nicht abgetippt, Preise nicht nachgeschlagen werden. Das Angebot ist fertig formatiert." },
+      nachfassen:{ titel: "Anfragen & Nachfassen",       je: "angebot",     bereich: "anfragen",    text: "Alle Anfragen und Messekontakte in einer Liste. Erinnerung, wenn ein Angebot unbeantwortet bleibt.", warum: "Eine Erinnerung ersetzt das Suchen, welche Angebote noch offen sind." },
+      material:  { titel: "Material & Bestellung",       je: "auftrag",     bereich: "material",    text: "Material von der Baustelle melden. Sammelbestellung nach Ihrer Freigabe.", warum: "Meldung vom Handy statt Anruf. Eine Sammelbestellung statt vieler einzelner." },
+      doku:      { titel: "Baustellen-Doku & Nachkalkulation", je: "auftrag", bereich: "baustellen", text: "Fotos, Notizen, Stunden und Material landen automatisch beim richtigen Auftrag.", warum: "Fotos, Stunden und Material müssen nicht aus mehreren Quellen zusammengesucht werden." },
+      rechnung:  { titel: "Rechnungen",                  je: "auftrag",     bereich: "rechnungen",  text: "Aus Stunden und Material entsteht ein Rechnungsentwurf. Sie geben frei.", warum: "Positionen kommen aus Zeiterfassung und Material. Sie prüfen nur noch." },
+      belege:    { titel: "Belege & Buchhaltung",        je: "auftrag",     bereich: "buchhaltung", text: "Lieferantenrechnungen und Quittungen werden gesammelt und zugeordnet.", warum: "Belege kommen von selbst an. Sie schauen nur auf Unklares." }
     },
 
     /* Gewerke: Vorgabewerte und Minuten [vorher, nachher] je Einheit.
        Alle Werte sind Annahmen und können hier angepasst werden. */
     gewerke: [
-      { id: "fenster", titel: "Fenster & Türen", symbol: "fenster",
+      { id: "fenster", aufmass: true, titel: "Fenster & Türen", symbol: "fenster",
         vorgabe: { mitarbeiter: 8, auftraege: 20, angebote: 40, satz: 40 },
         minuten: { zeit: [84, 18], termine: [120, 66], angebot: [45, 25], nachfassen: [6, 1], material: [30, 10], doku: [25, 8], rechnung: [30, 10], belege: [12, 4] } },
-      { id: "dach", titel: "Dach & Zimmerei", symbol: "dach",
+      { id: "dach", aufmass: true, titel: "Dach & Zimmerei", symbol: "dach",
         vorgabe: { mitarbeiter: 10, auftraege: 8, angebote: 15, satz: 40 },
         minuten: { zeit: [84, 18], termine: [120, 66], angebot: [90, 45], nachfassen: [6, 1], material: [40, 12], doku: [60, 20], rechnung: [40, 12], belege: [16, 5] } },
-      { id: "schreiner", titel: "Schreinerei & Treppen", symbol: "schreiner",
+      { id: "schreiner", aufmass: true, titel: "Schreinerei & Treppen", symbol: "schreiner",
         vorgabe: { mitarbeiter: 6, auftraege: 10, angebote: 15, satz: 40 },
         minuten: { zeit: [84, 18], termine: [120, 66], angebot: [90, 45], nachfassen: [6, 1], material: [30, 10], doku: [30, 10], rechnung: [30, 10], belege: [12, 4] } },
-      { id: "ofen", titel: "Ofen- & Kaminbau", symbol: "ofen",
+      { id: "ofen", aufmass: true, titel: "Ofen- & Kaminbau", symbol: "ofen",
         vorgabe: { mitarbeiter: 4, auftraege: 6, angebote: 12, satz: 40 },
         minuten: { zeit: [84, 18], termine: [120, 66], angebot: [60, 25], nachfassen: [6, 1], material: [30, 10], doku: [25, 8], rechnung: [30, 10], belege: [12, 4] } },
-      { id: "sanierung", titel: "Sanierung & Fliesen", symbol: "sanierung",
+      { id: "sanierung", aufmass: true, titel: "Sanierung & Fliesen", symbol: "sanierung",
         vorgabe: { mitarbeiter: 6, auftraege: 12, angebote: 15, satz: 40 },
         minuten: { zeit: [84, 18], termine: [120, 66], angebot: [45, 20], nachfassen: [6, 1], material: [30, 10], doku: [45, 15], rechnung: [30, 10], belege: [12, 4] } },
-      { id: "shk", titel: "Heizung & Sanitär", symbol: "shk",
+      { id: "shk", aufmass: false, titel: "Heizung & Sanitär", symbol: "shk",
         vorgabe: { mitarbeiter: 5, auftraege: 40, angebote: 15, satz: 35 },
         minuten: { zeit: [84, 18], termine: [120, 66], angebot: [40, 15], nachfassen: [6, 1], material: [12, 4], doku: [10, 3], rechnung: [15, 3.75], belege: [6, 2] } },
-      { id: "elektro", titel: "Elektro", symbol: "elektro",
+      { id: "elektro", aufmass: false, titel: "Elektro", symbol: "elektro",
         vorgabe: { mitarbeiter: 6, auftraege: 40, angebote: 12, satz: 35 },
         minuten: { zeit: [84, 18], termine: [120, 66], angebot: [40, 15], nachfassen: [6, 1], material: [12, 4], doku: [10, 3], rechnung: [15, 3.75], belege: [6, 2] } },
-      { id: "garten", titel: "Garten- & Landschaftsbau", symbol: "garten",
+      { id: "garten", aufmass: true, titel: "Garten- & Landschaftsbau", symbol: "garten",
         vorgabe: { mitarbeiter: 6, auftraege: 15, angebote: 15, satz: 35 },
         minuten: { zeit: [84, 18], termine: [120, 66], angebot: [45, 20], nachfassen: [6, 1], material: [30, 10], doku: [30, 10], rechnung: [30, 10], belege: [12, 4] } }
     ]
@@ -547,7 +547,7 @@ window.INHALTE = {
       { titel: "Betreuung", text: "Ich bleibe Ihr Ansprechpartner. Wenn sich etwas ändert, passe ich es an." }
     ],
     versprechen: [
-      { titel: "Server in Deutschland", text: "Die Automatisierung läuft auf einem Server in Deutschland. Wo Ihre Daten liegen, legen wir gemeinsam fest." },
+      { titel: "Ihre Konten, Server in Deutschland", text: "Die Abläufe laufen auf Ihren Konten und auf einem Server in Deutschland. Sie behalten alles, ich habe nur Zugang zur Betreuung." },
       { titel: "Ihre Programme bleiben", text: "Sie arbeiten weiter mit Lexware oder dem, was Sie heute nutzen." },
       { titel: "Nichts ohne Freigabe", text: "Keine Rechnung, keine Mahnung, keine Bestellung geht ohne Ihren Klick raus." },
       { titel: "Verständlich", text: "Sie bekommen eine einfache Anleitung, keine IT-Sprache." }
@@ -556,6 +556,7 @@ window.INHALTE = {
 
   /* ---------------------------------------------------------------- */
   kontakt: {
+    band: "Gespräch nach der Messe",
     ueberschrift: "Kostenlose Erstanalyse",
     text: "Ich komme in Ihren Betrieb und schaue mir Ihre Büroabläufe an. Etwa 90 Minuten. Danach wissen Sie, wo sich Automatisierung lohnt und wo nicht. Kostenlos und unverbindlich.",
     qrText: "QR-Code abfotografieren und die Seite in Ruhe zu Hause ansehen.",

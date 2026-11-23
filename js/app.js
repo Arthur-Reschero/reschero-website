@@ -208,6 +208,11 @@
         regler("angebote", "Angebote pro Monat", 0, 120, 1, w.angebote, "") +
         regler("satz", "Stundensatz fürs Büro", 20, 80, 1, w.satz, " €") +
         '<p class="hinweis">Stundensatz: Was eine Stunde Bürozeit kostet, inklusive Nebenkosten. Oder was Ihre eigene Stunde wert ist.</p>' +
+        '<h3 style="margin-top:22px">Welche Abläufe gibt es bei Ihnen?</h3><p class="hinweis">Abwählen, was Sie nicht machen oder schon gut gelöst haben.</p><div class="ablauf-wahl">' +
+        Object.keys(r.prozesse).map(function (k) {
+          var an = (R.aus || []).indexOf(k) < 0;
+          return '<button type="button" class="m-chip' + (an ? " an" : "") + '" aria-pressed="' + an + '" data-prozess="' + k + '">' + (an ? "✓ " : "") + esc(prozessTitel(k, g)) + "</button>";
+        }).join("") + "</div>" +
         '<div class="knopfreihe"><a class="knopf voll" href="#/rechner/ergebnis" id="zumErgebnis">Ergebnis anzeigen →</a><a class="knopf" href="#/rechner">← Gewerk ändern</a></div></div>' +
         '<div class="karte vorschau"><h2>Vorschau</h2><div class="ergebnis haupt"><div class="wert" id="vorschauStd"></div><div class="was">Stunden pro Monat, die sich sparen lassen könnten</div></div><p class="hinweis" style="margin-top:12px">Im nächsten Schritt sehen Sie, welcher Ablauf wie viel ausmacht.</p></div></section>';
       return h;
@@ -222,37 +227,45 @@
       '<h2 style="margin:6px 0 0">Geschätzte Ersparnis: <span class="gruen">' + zahl(e.summe * f / 60) + "–" + zahl(e.summe / 60) + " Std. pro Monat</span></h2>" +
       '<p style="margin:6px 0 0">Das entspricht etwa <b>' + zahl(Math.round(e.summe * f / 60 * e.w.satz * 12 / 100) * 100) + "–" + zahl(Math.round(e.summe / 60 * e.w.satz * 12 / 100) * 100) + " € pro Jahr</b> bei " + zahl(e.w.satz) + " € pro Stunde.</p>" +
       '<p class="hinweis" style="margin:6px 0 0">Untere Zahl: vorsichtig gerechnet (die Hälfte). Obere Zahl: Rechenbeispiel mit allen Annahmen.</p></div></section>';
-    h += '<section class="abschnitt"><h2>Wo es sich am meisten lohnt</h2><p class="hinweis">Tippen Sie auf einen Ablauf für die Annahmen und die Handy-Eingabe.</p><div class="prozesse">';
+    h += '<section class="abschnitt karte erklaerung"><h3>So entstehen die Zahlen</h3><p>Für jeden Ablauf rechnet der Rechner: <b>Anzahl pro Monat × Minuten, die pro Vorgang wegfallen</b>. Beispiel: 40 Angebote × 20 Min. weniger = 800 Min. = 13,3 Std. im Monat.</p><p class="hinweis" style="margin:0">Die Minuten sind Schätzungen für einen typischen Betrieb im Bereich ' + esc(g.titel) + '. Im Gespräch ersetzen wir sie durch Ihre echten Werte.</p></section>';
+    h += '<section class="abschnitt"><h2>Wo es sich am meisten lohnt</h2><p class="hinweis">Tippen Sie auf einen Ablauf: Sie sehen, warum Zeit wegfällt, und die Handy-Eingabe dazu.</p><div class="prozesse">';
     e.liste.forEach(function (p, i) {
       var einheit = { mitarbeiter: "Mitarbeiter", auftrag: "Aufträge", angebot: "Angebote" }[p.je];
       h += '<details class="prozess' + (i < 3 ? " top" : "") + '"><summary>' +
         '<span class="p-rang">' + (i + 1) + "</span>" +
-        '<span class="p-name">' + esc(p.titel) + (i < 3 ? ' <em>Hier zuerst ansetzen</em>' : "") + "</span>" +
+        '<span class="p-name">' + esc(p.titel) + '<em>' + zahl(p.menge) + " " + einheit + " × " + zahl(p.min[0] - p.min[1], (p.min[0] - p.min[1]) % 1 ? 1 : 0) + " Min. weniger</em></span>" +
         '<span class="p-balken"><i style="width:' + Math.max(4, p.gespart / max * 100) + '%"></i></span>' +
         '<span class="p-wert">−' + stunden(p.gespart / 60) + "</span></summary>" +
-        '<div class="p-details"><p>' + esc(p.text) + "</p>" +
+        '<div class="p-details"><p><b>Was sich ändert:</b> ' + esc(p.text) + "</p>" + (p.warum ? "<p><b>Warum Zeit wegfällt:</b> " + esc(p.warum) + "</p>" : "") +
         '<table><tbody><tr><td>Heute</td><td class="zahl">' + stunden(p.vorher / 60) + '</td></tr><tr><td>Automatisiert</td><td class="zahl">' + stunden(p.nachher / 60) + '</td></tr><tr class="summe"><td>Gespart pro Monat</td><td class="zahl">' + stunden(p.gespart / 60) + " ≈ " + zahl(Math.round(p.gespart / 60 * e.w.satz)) + " €</td></tr></tbody></table>" +
         '<p class="hinweis">Annahme: ' + zahl(p.menge) + " " + einheit + " × " + zahl(p.min[0], p.min[0] % 1 ? 2 : 0) + " Min. heute, " + zahl(p.min[1], p.min[1] % 1 ? 2 : 0) + " Min. automatisiert, pro Monat.</p>" +
         '<a class="knopf" href="#/bereich/' + esc(p.bereich) + '">Ablauf & Handy-Eingabe ansehen →</a></div></details>';
     });
-    h += "</div></section>";
+    h += "</div>";
+    if (e.aus.length) h += '<p class="hinweis" style="margin-top:12px">Nicht eingerechnet, weil abgewählt: ' + e.aus.map(esc).join(", ") + ' · <a href="#/rechner/werte">ändern</a></p>';
+    h += "</section>";
     h += '<section class="abschnitt karte"><p class="hinweis" style="margin:0">' + esc(r.hinweis) + "</p></section>";
     h += '<section class="abschnitt knopfreihe"><a class="knopf voll" href="#/kontakt">Kostenlose Erstanalyse</a><a class="knopf" href="#/rechner/werte">← Zahlen ändern</a><a class="knopf" href="#/rechner">Anderes Gewerk</a></section>';
     return h;
   }
 
   function berechne(g, w) {
-    var P = I.rechner.prozesse, liste = [], summe = 0;
+    var P = I.rechner.prozesse, liste = [], summe = 0, aus = [];
     Object.keys(P).forEach(function (k) {
       var p = P[k], min = g.minuten[k];
       if (!min) return;
+      if ((R.aus || []).indexOf(k) >= 0) { aus.push(prozessTitel(k, g)); return; }
       var menge = p.je === "mitarbeiter" ? w.mitarbeiter : p.je === "angebot" ? w.angebote : w.auftraege;
       var vorher = menge * min[0], nachher = menge * min[1];
-      var x = { titel: p.titel, text: p.text, bereich: p.bereich, je: p.je, menge: menge, min: min, vorher: vorher, nachher: nachher, gespart: vorher - nachher };
+      var x = { titel: prozessTitel(k, g), text: p.text, warum: p.warum, bereich: p.bereich, je: p.je, menge: menge, min: min, vorher: vorher, nachher: nachher, gespart: vorher - nachher };
       summe += x.gespart; liste.push(x);
     });
     liste.sort(function (a, b) { return b.gespart - a.gespart; });
-    return { liste: liste, summe: summe, w: w };
+    return { liste: liste, summe: summe, w: w, aus: aus };
+  }
+  function prozessTitel(k, g) {
+    var p = I.rechner.prozesse[k];
+    return (k === "angebot" && g && g.aufmass && p.titelAufmass) ? p.titelAufmass : p.titel;
   }
 
   function regler(id, text, min, max, schritt, wert, einheit) {
@@ -264,7 +277,7 @@
     main.querySelectorAll("[data-gewerk]").forEach(function (b) {
       b.addEventListener("click", function () {
         var g = gewerkNach(b.getAttribute("data-gewerk"));
-        R.gewerk = g.id; R.werte = JSON.parse(JSON.stringify(g.vorgabe)); rSpeichern();
+        R.gewerk = g.id; R.werte = JSON.parse(JSON.stringify(g.vorgabe)); R.aus = []; rSpeichern();
         location.hash = "#/rechner/werte";
       });
     });
@@ -282,6 +295,17 @@
       document.getElementById("vorschauStd").textContent = zahl(e.summe * I.rechner.vorsichtigFaktor / 60) + "–" + zahl(e.summe / 60);
     }
     main.querySelectorAll("input[type=range]").forEach(function (el) { el.addEventListener("input", neu); });
+    main.querySelectorAll("[data-prozess]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var k = b.getAttribute("data-prozess"); R.aus = R.aus || [];
+        var i = R.aus.indexOf(k);
+        if (i >= 0) R.aus.splice(i, 1); else R.aus.push(k);
+        var an = R.aus.indexOf(k) < 0;
+        b.classList.toggle("an", an); b.setAttribute("aria-pressed", an);
+        b.textContent = (an ? "✓ " : "") + prozessTitel(k, g);
+        neu();
+      });
+    });
     neu();
   }
 
@@ -309,7 +333,7 @@
     var k = I.kontakt;
     var link = (E.webadresse || location.origin) + "/" + (E.zugangsschluessel ? "?zugang=" + encodeURIComponent(E.zugangsschluessel) : "");
     var h = '<section class="abschnitt kontakt-box">';
-    h += '<div class="karte dunkel"><div class="messe-band">Messe-Angebot</div><h1>' + esc(k.ueberschrift) + "</h1><p>" + esc(k.text) + "</p>";
+    h += '<div class="karte dunkel"><div class="messe-band">' + esc(k.band || "") + '</div><h1>' + esc(k.ueberschrift) + "</h1><p>" + esc(k.text) + "</p>";
     if (k.pilotHinweis) h += '<p style="font-weight:700;color:#fff">' + esc(k.pilotHinweis) + "</p>";
     h += '<a class="mail-knopf" href="mailto:' + esc(E.email) + "?subject=" + encodeURIComponent("Kostenlose Erstanalyse") + '">' + symbol("mail") + "<span>" + esc(E.email) + "</span></a>";
     if (E.name) h += '<p style="margin-top:16px">' + esc(E.name) + " · Reschero</p>";

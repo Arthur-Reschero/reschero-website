@@ -23,7 +23,7 @@ window.EINSTELLUNGEN = {
   name: "Arthur Reschke",
 
   // Messe-Hinweis oben auf der Startseite. Leer lassen = kein Hinweis.
-  messeHinweis: "Live auf der Heim+Handwerk München, 25.–29. November 2026",
+  messeHinweis: "",
 
   // Minijob-Verdienstgrenze pro Monat in Euro (2026: 603, ab 2027: 633)
   minijobGrenze: 603,
